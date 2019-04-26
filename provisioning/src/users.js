@@ -1,10 +1,6 @@
-const {
-  readJsonFile
-} = require("./files");
-const {
-  createUser,
-  grantAllPermissionsToUser
-} = require("./api");
+const { readJsonFile } = require("./files");
+const { createUser, createGroup, grantAllPermissionsToUser } = require("./api");
+
 const provisionUsers = async (axios, folder, organization) => {
   try {
     const users = readJsonFile(folder + "users.json");
@@ -29,6 +25,25 @@ const provisionUsers = async (axios, folder, organization) => {
   }
 };
 
+const provisionGroups = async (axios, folder) => {
+  try {
+    const groups = readJsonFile(folder + "groups.json");
+    for (const group of groups) {
+      console.log(`~> Adding group ${group.displayName}`);
+      await createGroup(axios, group);
+    }
+  } catch (err) {
+    if (err.code && err.code === "MAX_RETRIES") {
+      console.log("Failed to provision groups, max retries exceeded");
+    } else {
+      console.log(
+        `The following error occured during user provisioning ${err.message}`
+      );
+    }
+  }
+};
+
 module.exports = {
-  provisionUsers
+  provisionUsers,
+  provisionGroups
 };

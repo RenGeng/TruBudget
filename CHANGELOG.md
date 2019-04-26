@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - When adding subprojects, projected budgets are not mandatory anymore [#229](https://github.com/openkfw/TruBudget/issues/229)
+- Added groups to provisioning [#57](https://github.com/openkfw/TruBudget/issues/57)
 
 ### Fixed
 
